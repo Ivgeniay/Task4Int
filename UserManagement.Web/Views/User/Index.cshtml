@@ -1,0 +1,72 @@
+﻿@model IEnumerable<UserManagement.Core.Models.UserDto>
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<div class="table-card">
+    <h2 class="text-center mb-4 fw-bold">User Management</h2>
+
+    <div class="toolbar mb-4">
+        <button id="blockBtn" class="btn btn-outline-danger me-2" disabled>
+            <i class="bi bi-slash-circle"></i> Block
+        </button>
+        <button id="unblockBtn" class="btn btn-outline-success me-2" disabled>
+            <i class="bi bi-check-circle"></i> Unblock
+        </button>
+        <button id="deleteBtn" class="btn btn-outline-dark" disabled>
+            <i class="bi bi-trash"></i> Delete
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 50px;">
+                        <input type="checkbox" id="selectAll" class="form-check-input">
+                    </th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Last Login</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr class="@(user.IsCurrentUser ? "table-warning" : "")">
+                        <td>
+                            <input type="checkbox" class="form-check-input user-checkbox" value="@user.Id">
+                        </td>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>
+                            @if (user.LastLoginDate.HasValue)
+                            {
+                                @user.LastLoginDate.Value.ToString("MM/dd/yyyy HH:mm")
+                            }
+                            else
+                            {
+                                <span class="text-muted">Never</span>
+                            }
+                        </td>
+                        <td>
+                            @if (user.Status == "Active")
+                            {
+                                <span class="badge bg-success">@user.Status</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@user.Status</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/userManagement.js" asp-append-version="true"></script>
+}

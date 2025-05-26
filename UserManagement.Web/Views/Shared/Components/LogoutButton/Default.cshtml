@@ -1,0 +1,12 @@
+﻿@model bool?
+
+@if (Model.HasValue && Model.Value)
+{
+    <div class="logout-btn">
+        <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline">
+            <button type="submit" class="btn btn-light btn-sm rounded-pill">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </form>
+    </div>
+}
